@@ -1,6 +1,8 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const { PORT } = require("./config/server-config")
+const { sendBasicEmail } = require("./services/email-service")
+
 const app = express()
 
 const setUpAndStartServer = () => {
@@ -10,6 +12,13 @@ const setUpAndStartServer = () => {
 
     app.listen(PORT, () => {
         console.log(`Live on server ${PORT}`)
+
+        sendBasicEmail(
+            "support@omi.com",
+            "reminderservice1513@gmail.com",
+            "Test mail",
+            "Hey , wasssuppp??"
+        )
     })
 }
 
