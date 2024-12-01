@@ -4,19 +4,22 @@ const { PORT } = require("./config/server-config")
 const { sendBasicEmail } = require("./services/email-service")
 const TicketController = require("./controllers/ticket-controller")
 const jobs = require("./utils/job")
+const { createChannel } = require("./utils/message-queue")
 
 const app = express()
 
-const setUpAndStartServer = () => {
+const setUpAndStartServer = async () => {
 
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
+
+    const channel = await createChannel()
 
     app.post("/api/v1/tickets", TicketController.create)
 
     app.listen(PORT, () => {
         console.log(`Live on server ${PORT}`)
-        jobs()
+        // jobs()
         // sendBasicEmail(
         //     "support@omi.com",
         //     "reminderservice1513@gmail.com",
